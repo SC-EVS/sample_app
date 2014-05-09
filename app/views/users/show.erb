@@ -1,0 +1,23 @@
+<% provide(:title, @user.name) %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+        <%#= gravatar_for @user%>
+        <%= @user.name %>
+      </h1>
+    </section>
+    <ul>
+      <h2>Вы являетесь лидером в проектах:</h2>
+  <%@user.projects.each do |proj|%>
+        <li>
+            <%= link_to "#{proj.project_url}",project_path(proj)%>
+          <br>
+            <%= link_to "Удалить проект", proj, method: :delete,
+                        data: { confirm: "You sure?" }%>
+            <%#= proj.project_story%>
+        </li>
+  <%end%>
+    </ul>
+  </aside>
+</div>

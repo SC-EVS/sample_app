@@ -1,0 +1,36 @@
+<% provide(:title, 'New Project') %>
+<h1>New project</h1>
+<div class = "something">
+
+</div>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@project) do |f| %>
+        <%#= render 'shared/error_messages' %>
+        <% if @project.errors.any? %>
+            <div id="error_explanation">
+              <div class="alert alert-error">
+                The form contains <%= pluralize(@project.errors.count, "error") %>.
+              </div>
+              <ul>
+                <% @project.errors.full_messages.each do |msg| %>
+                    <li>* <%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        <%= f.label :project_url %>
+        <%= f.text_field :project_url %>
+
+        <%#= f.label :user_email %>
+        <%#= f.text_field :user_email %>
+
+        <%= f.label :project_story %>
+        <%= f.text_area :project_story %>
+
+        <%= f.submit "Create new project", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>
