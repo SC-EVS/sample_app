@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140509070733) do
+ActiveRecord::Schema.define(version: 20140510094907) do
+
+  create_table "backlog_items", force: true do |t|
+    t.integer  "project_id"
+    t.integer  "user_id"
+    t.string   "item_type"
+    t.string   "item_title"
+    t.string   "item_state"
+    t.text     "item_description"
+    t.date     "item_deadline"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "projects", force: true do |t|
     t.string   "project_url"
@@ -20,6 +32,13 @@ ActiveRecord::Schema.define(version: 20140509070733) do
     t.datetime "updated_at"
     t.text     "project_story"
     t.integer  "user_id"
+  end
+
+  create_table "teams", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "project_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|

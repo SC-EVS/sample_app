@@ -1,4 +1,40 @@
 <% provide(:title, @project.project_url) %>
 <h1>Show project</h1>
 <p>Find me in app/views/projects/show.html.erb</p>
+<h2>Команда на проекте:</h2>
+<ul>
+<%@project.teams.each do |team|%>
+    <li>
+      <%=User.find(team.user_id).email %>
+      <%#= link_to "#{team.user_id}",project_path(proj)%>
+      <br>
+      <% if current_user.email=@project.user_email%>
+          <%= link_to "Удалить пользователя из команды", team, method: :delete,
+                  data: { confirm: "You sure?" }%>
+          <%end%>
+
+      <%#= link_to "Удалить проект", proj, method: :delete,
+                  data: { confirm: "You sure?" }%>
+      <%#= proj.project_story%>
+    </li>
+<%end%>
+
+
+  <%@project.backlog_items.each do |item|%>
+      <li>
+        <%=item.item_title%>
+        <%#= link_to "#{team.user_id}",project_path(proj)%>
+        <br>
+        <% if current_user.email=@project.user_email%>
+            <%= link_to "Удалить backlog item", item, method: :delete,
+                        data: { confirm: "You sure?" }%>
+        <%end%>
+
+        <%#= link_to "Удалить проект", proj, method: :delete,
+                  data: { confirm: "You sure?" }%>
+        <%#= proj.project_story%>
+      </li>
+  <%end%>
+</ul>
+
 <%= link_to "Редактировать описание проекта", edit_project_path(@project)%>

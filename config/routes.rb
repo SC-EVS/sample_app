@@ -1,6 +1,10 @@
 SampleApp::Application.routes.draw do
+  get "backlog_items/new"
+  get "backlog_items/destroy"
+  get "backlog_items/create"
   get "projects/show"
   get "projects/new"
+
   get "projects/update"
   get "projects/delete"
   resources :users
@@ -17,6 +21,8 @@ SampleApp::Application.routes.draw do
 
 
   resources :projects
+  resources :teams
+  resources :backlog_items
  # match '/'       , to: 'static_pages#home'   , via: 'get'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
