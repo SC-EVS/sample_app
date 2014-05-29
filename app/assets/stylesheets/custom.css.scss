@@ -200,3 +200,61 @@ input {
     }
   }
 }
+
+.small-dropdown{
+  width: 20%;
+  height: 10%;
+  display: inline-block;
+}
+
+.fixed_button{
+  width: 25%;
+  height: 20%;
+  display: inline-block;
+
+  br{
+    border-top: 1px solid $grayLighter;
+  }
+}
+.inline-something{
+  display: inline-block;
+  color: #449d44;
+  width: 40%;
+}
+
+
+.box2 {
+  display: inline-block;
+  vertical-align: top;
+
+  margin: 1em;
+  .left-panel-width{
+    width: 210px;
+  }
+  .table-width{
+    width: 560px;
+
+  }
+}
+//
+.label-default {
+  background-color: #999;
+}
+.label {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+}
+.my_table{
+  width: 50%;
+}
+.label-primary {
+  background-color: #428bca;
+}

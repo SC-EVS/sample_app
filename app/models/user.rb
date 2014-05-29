@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_many :projects
   has_many :teams
   has_many :backlog_items
+  has_many :sprint_backlog_items
   def User.new_remember_token
     SecureRandom.urlsafe_base64
   end

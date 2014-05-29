@@ -13,7 +13,8 @@ class TeamsController < ApplicationController
  def create
    @team = Team.new(project_params)
    @user =User.find_by_email(project_params[:user_id])
-   @project = Project.find_by_project_url(project_params[:project_id].strip)
+   #@project = Project.find_by_project_url(project_params[:project_id].strip)
+   @project = Project.find(project_params[:project_id])
  # Если нашелся пользователь и проект, и текущий пользователь -- создатель проекта
    if !@user.nil?&&!@project.nil?&&current_user.email==@project.user_email
      @team.user_id=@user.id

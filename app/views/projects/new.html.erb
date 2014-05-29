@@ -1,5 +1,5 @@
 <% provide(:title, 'New Project') %>
-<h1>New project</h1>
+<h1>Новый проект</h1>
 <div class = "something">
 
 </div>
@@ -21,16 +21,16 @@
             </div>
         <% end %>
 
-        <%= f.label :project_url %>
+        <%= f.label "Название проекта" %>
         <%= f.text_field :project_url %>
 
         <%#= f.label :user_email %>
         <%#= f.text_field :user_email %>
 
-        <%= f.label :project_story %>
+        <%= f.label "Описание проекта" %>
         <%= f.text_area :project_story %>
 
-        <%= f.submit "Create new project", class: "btn btn-large btn-primary" %>
+        <%= f.submit "Создать новый проект", class: "btn btn-large btn-primary" %>
     <% end %>
   </div>
 </div>

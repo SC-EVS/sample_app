@@ -2,6 +2,20 @@ class ProjectsController < ApplicationController
   before_action :signed_in_user #, only: [:index, :edit, :update, :create]
   def show
     @project = Project.find(params[:id])
+    if !params[:user].nil?
+      @user = User.find(params[:user])
+    end
+    if !params[:backlog_item].nil?
+      @backlog_item = BacklogItem.find(params[:backlog_item])
+    end
+
+    if !params[:sprint_backlog_item].nil?
+      @sprint_backlog_item = SprintBacklogItem.find(params[:sprint_backlog_item])
+    end
+    if !params[:user_name].nil?
+      @user_selected = User.find(params[:user_name])
+    end
+lolka = 0
   end
 
   def new
@@ -42,7 +56,7 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     if @project.update_attributes(project_params)
       flash[:success] = "Project updated"
-      redirect_to current_user
+      redirect_to @project
     else
       render 'edit'
     end

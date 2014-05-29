@@ -1,0 +1,35 @@
+<% provide(:title, 'Add backlog item to sprint') %>
+<h1>Добавить задачу в спринт</h1>
+<div class = "something">
+
+</div>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@sprint_team) do |f| %>
+        <% if @sprint_team.errors.any? %>
+            <div id="error_explanation">
+              <div class="alert alert-error">
+                The form contains <%= pluralize(@sprint_team.errors.count, "error") %>.
+              </div>
+              <ul>
+                <% @sprint_team.errors.full_messages.each do |msg| %>
+                    <li>* <%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        <%= f.label "Название спринта"%>
+        <%#= f.text_field :project_id %>
+        <%= f.select :sprint_id, options_from_collection_for_select(@project.sprints, "id", "title"), include_blank: false %>
+
+        <%= f.label "Название задачи" %>
+        <%= f.select :backlog_item_id, options_from_collection_for_select(@project.backlog_items, "id", "item_title"), include_blank: false %>
+
+
+
+        <%= f.submit "Добавить задачу к спринту", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

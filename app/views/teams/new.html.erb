@@ -19,16 +19,17 @@
               </ul>
             </div>
         <% end %>
+        <%= f.label :"Название проекта" %>
+        <%#= f.text_field :project_id %>
+        <%= f.select :project_id, options_from_collection_for_select(current_user.projects, "id", "project_url"), include_blank: false %>
 
-        <%= f.label :project_url %>
-        <%= f.text_field :project_id %>
-
-        <%= f.label :user_email %>
+        <%= f.label :"Электронный адрес пользователя" %>
         <%= f.text_field :user_id%>
 
 
 
-        <%= f.submit "Add user to team", class: "btn btn-large btn-primary" %>
+
+        <%= f.submit "Добавить пользователя в команду", class: "btn btn-large btn-primary" %>
     <% end %>
   </div>
 </div>

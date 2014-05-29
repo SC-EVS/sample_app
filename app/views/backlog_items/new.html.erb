@@ -1,8 +1,8 @@
-<h1>BacklogItem#new</h1>
-<p>Find me in app/views/backlog_item/new.html.erb</p>
+
+<%#= @team%>
 
 <% provide(:title, 'New backlog item') %>
-<h1>Add backlog item to project</h1>
+<h1>Добавить задачу к проекту</h1>
 <div class = "something">
 
 </div>
@@ -24,32 +24,39 @@
             </div>
         <% end %>
 
-        <%= f.label :project_url %>
-        <%= f.text_field :project_id %>
+        <%= f.label "Название проекта" %>
+        <%= f.select :project_id, [[@project.project_url,@project.id]] %>
 
-        <%= f.label :user_email %>
-        <%= f.text_field :user_id%>
 
-        <%= f.label :item_type %>
+        <%= f.label "Электронный адрес пользователя"%>
+        <select id="backlog_item_user_id" name="backlog_item[user_id]">
+          <%@project.teams.each do |team|%>
+              <option value=<%= team.user_id %>><%= User.find(team.user_id).email %></option>
+          <%end%>
+        </select>
+        <%#= f.select :item_type, options_from_collection_for_select(@user_email_hash, @user_email_hash[], ) %>
+
+        <%= f.label "Тип задачи" %>
         <%#= f.text_field :item_type %>
+        <%#= f.select :item_type, options_from_collection_for_select(Project.all, "id", "project_url") %>
         <%= f.select :item_type, [['Bugfix','bugfix'],['Backlog_item','backlog_item']] %>
 
-        <%= f.label :item_title %>
+        <%= f.label "Название задачи" %>
         <%= f.text_field :item_title %>
 
 
-        <%= f.label :item_state %>
+        <%= f.label "Состояние задачи" %>
         <%= f.select :item_state, [['Started','started'],['In_progress','in_progress'],['Done','done'],['Removed','removed']] %>
         <%#= f.text_field :item_state %>
 
-        <%= f.label :item_description %>
+        <%= f.label "Описание задачи"%>
         <%= f.text_field :item_description %>
 
-        <%= f.label :item_deadline %>
+        <%= f.label "Срок сдачи" %>
         <%= f.date_select :item_deadline %>
 
 
-        <%= f.submit "Add new backlog item to project", class: "btn btn-large btn-primary" %>
+        <%= f.submit "Добавить новую задачу к проекту", class: "btn btn-large btn-primary" %>
     <% end %>
   </div>
 </div>

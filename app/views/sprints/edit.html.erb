@@ -1,0 +1,34 @@
+<%=provide(:title, "Edit sprint")%>
+<h1>Корректировать спринт</h1>
+<div class = "something">
+  <%#=@project.id%>
+</div>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@sprint) do |f| %>
+
+        <% if @sprint.errors.any? %>
+            <div id="error_explanation">
+              <div class="alert alert-error">
+                The form contains <%= pluralize(@sprint.errors.count, "error") %>.
+              </div>
+              <ul>
+                <% @sprint.errors.full_messages.each do |msg| %>
+                    <li>* <%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        <%= f.label "Название"%>
+        <%= f.text_field :title %>
+        <%= f.label "Дата начала спринта"%>
+        <%= f.date_select :datestart %>
+        <%= f.label "Дата окончания спринта"%>
+        <%= f.date_select :dateend %>
+        <%= f.submit "Корректировать спринт", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>
+

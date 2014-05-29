@@ -1,0 +1,16 @@
+<%=provide(:title,"Edit sprint backlog item")%>
+<h1>Редактировать подзадачу</h1>
+
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@sprintbacklogitem) do |f| %>
+        <%= f.label "Состояние" %>
+        <%= f.select :state, [['Started','started'],['In_progress','in_progress'],['Done','done'],['Removed','removed']] %>
+        <%= f.label "Описание"%>
+        <%= f.text_area :subtask_description %>
+        <%= f.submit "Изменить состояние подзадачи", class: "btn btn-large btn-primary" %>
+
+    <% end %>
+  </div>
+</div>

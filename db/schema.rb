@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140510094907) do
+ActiveRecord::Schema.define(version: 20140524140458) do
 
   create_table "backlog_items", force: true do |t|
     t.integer  "project_id"
@@ -32,6 +32,32 @@ ActiveRecord::Schema.define(version: 20140510094907) do
     t.datetime "updated_at"
     t.text     "project_story"
     t.integer  "user_id"
+  end
+
+  create_table "sprint_backlog_items", force: true do |t|
+    t.integer  "backlog_item_id"
+    t.integer  "user_id"
+    t.string   "activity"
+    t.string   "state"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "subtask_description"
+  end
+
+  create_table "sprint_teams", force: true do |t|
+    t.integer  "backlog_item_id"
+    t.integer  "sprint_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "sprints", force: true do |t|
+    t.integer  "project_id"
+    t.string   "title"
+    t.date     "datestart"
+    t.date     "dateend"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "teams", force: true do |t|

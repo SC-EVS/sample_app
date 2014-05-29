@@ -1,40 +1,285 @@
 <% provide(:title, @project.project_url) %>
-<h1>Show project</h1>
-<p>Find me in app/views/projects/show.html.erb</p>
-<h2>Команда на проекте:</h2>
-<ul>
-<%@project.teams.each do |team|%>
-    <li>
-      <%=User.find(team.user_id).email %>
-      <%#= link_to "#{team.user_id}",project_path(proj)%>
-      <br>
-      <% if current_user.email=@project.user_email%>
-          <%= link_to "Удалить пользователя из команды", team, method: :delete,
-                  data: { confirm: "You sure?" }%>
+
+<h1><span class="label label-primary">Проект <%=@project.project_url%></span></h1>
+
+  <h2><span class="label label-primary">Создатель <%=@project.user_email%></span></h2>
+
+<h4><%= @project.project_story %></h4>
+<!-- список пользователей на проекте-->
+<div class="btn-group">
+  <button type="button " class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+    Пользователи на проекте <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <%@project.teams.each do |team|%>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><%=link_to "#{User.find(team.user_id).email}", project_path(user_name:team.user_id)%></a></li>
+        <li role="presentation"> <a role="menuitem" tabindex="-1" href="#">
+          <% if current_user.email==@project.user_email%>
+              <%= link_to "Удалить пользователя из команды", team, method: :delete,
+                          data: { confirm: "You sure?" }%>
+              <li class="divider"></li>
+          <%end%> </a></li>
+
+
+    <% end %>
+  </ul>
+</div>
+<!-- Список задач на проекте -->
+<div class="btn-group">
+  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+    Задачи на проекте <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <%@project.backlog_items.each do |item|%>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><%=link_to "#{item.item_title}", project_path(backlog_item: item)%></a></li>
+        <li role="presentation"> <a role="menuitem" tabindex="-1" href="#">
+          <% if current_user.email==@project.user_email%>
+              <%= link_to "Удалить задачу", item, method: :delete,
+                          data: { confirm: "You sure?" }%>
+              <li class="divider"></li>
+          <%end%> </a></li>
+    <% end %>
+  </ul>
+</div>
+<!-- Боковая панель команды на проекте-->
+<p>
+<div class="box2">
+  <div class="panel panel-default">
+    <div class = "left-panel-width">
+            <div class="panel-body">
+                <div class="list-group">
+                 <a href="#" class="list-group-item active">
+                     Команда на проекте:
+                     </a>
+                     <%@project.teams.each do |team|%>
+
+                      <%=link_to "#{User.find(team.user_id).email}", project_path(user_name:team.user_id), class: "list-group-item"%>
+                        <% if current_user.email==@project.user_email%>
+                            <%= link_to "Удалить из команды", team, method: :delete,
+                            data: { confirm: "You sure?" }, class: "list-group-item"%>
+                        <%end%>
+                        <a href="#" class="list-group-item active"> </a>
+                     <%end%>
+                </div>
+
+<!-- Боковая панель задач-->
+
+              <div class="list-group">
+                <a href="#" class="list-group-item active">
+                  Задачи:
+                </a>
+                <%@project.backlog_items.each do |item|%>
+                  <%=link_to "#{item.item_title}", project_path(backlog_item: item), class: "list-group-item" %>
+                    <% if current_user.email==@project.user_email%>
+                        <%= link_to "Удалить задачу", item, method: :delete,
+                                    data: { confirm: "You sure?" }, class: "list-group-item"%>
+                    <%end%>
+                    <a href="#" class="list-group-item active"> </a>
+                <%end%>
+              </div>
+            </div>
+      </div>
+    </div>
+</div>
+
+
+
+<div class="panel panel-default box2">
+</p>
+  <div class="table-width">
+  <div class="bs-example">
+    <%if !@user_selected.nil?%>
+
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th>Почтовый адрес пользователя</th>
+            <th>Никнейм пользователя</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><%=@user_selected.email %></td>
+            <td><%=@user_selected.name %></td>
+          </tr>
+
+          </tbody>
+        </table>
+
+    <%end%>
+    <!-- Таблица спринтов-->
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Спринт</th>
+        <th>Дата начала</th>
+        <th>Дата окончания</th>
+        <th>Список задач</th>
+      </tr>
+      </thead>
+      <tbody>
+      <%@project.sprints.each do |sprint|%>
+      <tr>
+        <td>
+          <%=sprint.title %> <% if current_user.email==@project.user_email%>
+              <%= link_to "X", sprint, method: :delete,
+                          data: { confirm: "You sure?" }%>
           <%end%>
+        </td>
+        <td>
+          <%=sprint.datestart %>
+        </td>
+        <td>
+          <%=sprint.dateend %>
+        </td>
+        <td>
+          <div class="btn-group">
+            <button type="button " class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+              Задачи на спринте <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <%sprint.sprint_teams.each do |item|%>
+                  <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><%= link_to "#{BacklogItem.find(item.backlog_item_id).item_title}",
+                                                      project_path( backlog_item: item.backlog_item_id)%>
+                    <% if current_user.email==@project.user_email%>
+                        <%= link_to "Удалить", item, method: :delete,
+                                    data: { confirm: "You sure?" }%>
+                    <%end%>
+                  </a></li>
+                  <li class="divider"></li>
+              <% end %>
+            </ul>
+          </div>
+        </td>
+      </tr>
+          <tr>
+            <td colspan="4">
+              <%=link_to "Изменить спринт", edit_sprint_path(sprint), class: "btn btn-info" %>
+            </td>
+          </tr>
+          <% end%>
 
-      <%#= link_to "Удалить проект", proj, method: :delete,
-                  data: { confirm: "You sure?" }%>
-      <%#= proj.project_story%>
-    </li>
-<%end%>
+      </tbody>
+    </table>
 
 
-  <%@project.backlog_items.each do |item|%>
-      <li>
-        <%=item.item_title%>
-        <%#= link_to "#{team.user_id}",project_path(proj)%>
-        <br>
-        <% if current_user.email=@project.user_email%>
-            <%= link_to "Удалить backlog item", item, method: :delete,
-                        data: { confirm: "You sure?" }%>
-        <%end%>
+    <!-- Таблица с задачей-->
+   <% if !@backlog_item.nil? %>
 
-        <%#= link_to "Удалить проект", proj, method: :delete,
-                  data: { confirm: "You sure?" }%>
-        <%#= proj.project_story%>
-      </li>
-  <%end%>
-</ul>
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th  >#</th>
+            <th colspan="3">Задача <%=@backlog_item.item_title %></th>
+            <th >Описание задачи</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Тип</td>
+            <td colspan="3"><%=@backlog_item.item_type%></td>
+            <td rowspan="4" colspan="3"><%=@backlog_item.item_description%></td>
 
-<%= link_to "Редактировать описание проекта", edit_project_path(@project)%>
+          </tr>
+          <tr>
+            <td>Состояние</td>
+            <td colspan="3"><%=@backlog_item.item_state%></td>
+
+          </tr>
+          <tr>
+            <td>Окончание</td>
+            <td colspan="3"><%=@backlog_item.item_deadline%></td>
+          </tr>
+          <tr>
+            <td>Закреплено за</td>
+            <td colspan="3"><%=User.find(@backlog_item.user_id).email%></td>
+          </tr>
+          <tr>
+            <td>Подзадачи</td>
+            <td colspan="3">
+              <div class="btn-group">
+                <button type="button " class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                  Выбрать подзадачу<span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <%@backlog_item.sprint_backlog_items.each do |sprint_item|%>
+                      <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><%=link_to "#{SprintBacklogItem.find(sprint_item.id).activity}",
+                                                                                project_path( backlog_item: sprint_item.backlog_item, sprint_backlog_item:sprint_item )  %>
+                        <% if current_user.email==@project.user_email%>
+                            <%= link_to "Удалить", sprint_item, method: :delete,
+                                        data: { confirm: "You sure?" }%>
+                        <%end%>
+                      </a></li>
+                      <li class="divider"></li>
+                  <% end %>
+                </ul>
+              </div>
+            </td>
+            <td><%=link_to "Изменить задачу", edit_backlog_item_path(@backlog_item), class: "btn btn-info"%></td>
+          </tr>
+
+
+          </tbody>
+        </table>
+   <% end %>
+
+
+    <!-- Таблица с подзадачей-->
+    <% if !@sprint_backlog_item.nil? %>
+
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th  >#</th>
+            <th colspan="3">Подзадача <%=@sprint_backlog_item.activity  %></th>
+            <th >Описание подзадачи</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Состояние</td>
+            <td colspan="3"><%=@sprint_backlog_item.state%></td>
+            <td rowspan="5" colspan="3"><%=@sprint_backlog_item.subtask_description%></td>
+
+          </tr>
+
+
+          <tr>
+            <td rowspan="2" colspan="4"><%=link_to "Изменить подзадачу", edit_sprint_backlog_item_path(@sprint_backlog_item),
+                                                   class: "btn btn-info"%></td>
+
+          </tr>
+
+
+          </tbody>
+        </table>
+    <% end %>
+
+
+
+
+
+  </div>
+  </div>
+</div>
+
+<table class="table my_table">
+  <tbody>
+  <tr>
+    <td> <%= link_to "Добавить задачу", backlog_items_new_path(project: @project), class: "btn btn-default btn-block "%></td>
+    <td> <%= link_to "Добавить подзадачу", sprint_backlog_items_new_path(project: @project), class: "btn btn-default btn-block "%></td>
+  </tr>
+
+
+  <tr>
+    <td>  <%= link_to "Добавить спринт", sprints_new_path(project: @project), class: "btn btn-default btn-block "%></td>
+    <td>  <%= link_to "Добавить задачу к спринту", sprint_teams_new_path(project: @project), class: "btn btn-default btn-block "%></td>
+  </tr>
+
+  <tr>
+    <td> <%= link_to "Добавить пользователя в команду проекта", new_team_path, class: "btn btn-default btn-block"%></td>
+    <td> <%= link_to "Редактировать описание проекта", edit_project_path(@project), class: "btn btn-default btn-block"%></td>
+  </tr>
+  </tbody>
+</table>
+

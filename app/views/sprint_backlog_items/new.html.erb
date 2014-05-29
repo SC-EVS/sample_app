@@ -1,0 +1,27 @@
+<%=provide(:title,"New sprint backlog item")%>
+<h1>Новая подзадача</h1>
+
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@sprintbacklogitem) do |f| %>
+        <%= f.label "Пользователь"%>
+        <%#= select :user_id %>
+        <select id="sprint_backlog_item_user_id" name="sprint_backlog_item[user_id]">
+
+        <%@project.teams.each do |team|%>
+              <option value=<%= team.user_id %>><%= User.find(team.user_id).email %></option>
+          <%end%>
+        </select>
+        <%= f.label "Название"%>
+        <%= f.text_field :activity %>
+        <%= f.label "Состояние" %>
+        <%= f.select :state, [['Started','started'],['In_progress','in_progress'],['Done','done'],['Removed','removed']] %>
+        <%= f.label "Описание"%>
+        <%= f.text_area :subtask_description %>
+        <%= f.label "Выберите задачу" %>
+        <%= f.select :backlog_item_id, options_from_collection_for_select(@back_log_items, "id", "item_title"), include_blank: false %>
+        <%= f.submit "Создать новую подзадачу", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

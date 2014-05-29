@@ -1,6 +1,9 @@
 class BacklogItemsController < ApplicationController
+  before_action :signed_in_user
   def new
    @backlogitem = BacklogItem.new
+    @project =Project.find(params[:project])
+
   end
 
   def destroy
@@ -12,15 +15,15 @@ class BacklogItemsController < ApplicationController
   def create
 
     @backlogitem  = BacklogItem.new(project_params)
-    @user =User.find_by_email(project_params[:user_id].strip)
-    @project = Project.find_by_project_url(project_params[:project_id].strip)
-    if !@user.nil?&&!@project.nil?
-      @backlogitem.user_id=@user.id
-      @backlogitem.project_id=@project.id
-    end
-    if !@user.nil?&&!@project.nil?&&@backlogitem.save
+    #@user =User.find_by_email(project_params[:user_id].strip)
+    #@project = Project.find_by_project_url(project_params[:project_id].strip)
+   # if !@user.nil?#&&!@project.nil?
+     # @backlogitem.user_id=@user.id
+      #@backlogitem.project_id=@project.id
+    #end
+    if @backlogitem.save##&&!@project.nil?
       flash[:success] = "Backlog item was succesfully created!"
-      redirect_to @project
+      redirect_to Project.find(project_params[:project_id])
     else
       render 'new'
     end

@@ -1,7 +1,5 @@
-<h1>BacklogItem#Update</h1>
-<p>Find me in app/views/backlog_item/edit.html.erb</p>
 
-<% provide(:title, 'New backlog item') %>
+<% provide(:title, 'Edit backlog item') %>
 <h1>Update backlog item</h1>
 <div class = "something">
 
@@ -25,26 +23,26 @@
         <% end %>
 
 
-        <%= f.label :item_type %>
+        <%= f.label "Тип задачи" %>
         <%#= f.text_field :item_type %>
         <%= f.select :item_type, [['Bugfix','bugfix'],['Backlog_item','backlog_item']] %>
 
-        <%= f.label :item_title %>
+        <%= f.label "Название задачи" %>
         <%= f.text_field :item_title %>
 
 
-        <%= f.label :item_state %>
+        <%= f.label "Состояние задачи" %>
         <%= f.select :item_state, [['Started','started'],['In_progress','in_progress'],['Done','done'],['Removed','removed']] %>
         <%#= f.text_field :item_state %>
 
-        <%= f.label :item_description %>
-        <%= f.text_field :item_description %>
+        <%= f.label "Описание задачи" %>
+        <%= f.text_area :item_description %>
 
-        <%= f.label :item_deadline %>
+        <%= f.label "Deadline" %>
         <%= f.date_select :item_deadline %>
 
 
-        <%= f.submit "Add changes to backlog item", class: "btn btn-large btn-primary" %>
+        <%= f.submit "Изменить задачу", class: "btn btn-large btn-primary" %>
     <% end %>
   </div>
 </div>

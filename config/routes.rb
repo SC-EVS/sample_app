@@ -1,4 +1,17 @@
 SampleApp::Application.routes.draw do
+  get "sprint_teams/new"
+  get "sprint_teams/create"
+  get "sprint_teams/edit"
+  get "sprint_teams/update"
+  get "sprint_teams/delete"
+  get "sprints/new"
+  get "sprints/destroy"
+  get "sprints/create"
+  get "sprint_backlog_items/new"
+  get "sprint_backlog_items/edit"
+  get "sprint_backlog_items/create"
+  get "sprint_backlog_items/update"
+  get "sprint_backlog_items/destroy"
   get "backlog_items/new"
   get "backlog_items/destroy"
   get "backlog_items/create"
@@ -23,6 +36,11 @@ SampleApp::Application.routes.draw do
   resources :projects
   resources :teams
   resources :backlog_items
+  resources :sprint_backlog_items
+  resources :sprints
+  resources :sprint_teams
+
+  get 'sprint_backlog_items/new/:id' => 'sprint_backlog_items#new'
  # match '/'       , to: 'static_pages#home'   , via: 'get'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

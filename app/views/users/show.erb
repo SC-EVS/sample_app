@@ -2,22 +2,42 @@
 <div class="row">
   <aside class="span4">
     <section>
-      <h1>
-        <%#= gravatar_for @user%>
-        <%= @user.name %>
-      </h1>
+
     </section>
-    <ul>
-      <h2>Вы являетесь лидером в проектах:</h2>
-  <%@user.projects.each do |proj|%>
-        <li>
-            <%= link_to "#{proj.project_url}",project_path(proj)%>
-          <br>
-            <%= link_to "Удалить проект", proj, method: :delete,
-                        data: { confirm: "You sure?" }%>
-            <%#= proj.project_story%>
-        </li>
-  <%end%>
-    </ul>
   </aside>
+    <h1><span class="label label-primary">
+        <%#= gravatar_for @user%>
+      <%= @user.name %> (это Вы)
+          </span>
+    </h1>
+    <div class="box2">
+    <div class="list-group">
+      <a href="#" class="list-group-item active">
+        Ваши проекты:
+      </a>
+      <%@user.projects.each do |proj|%>
+
+          <%=link_to "#{proj.project_url}",project_path(proj), class: "list-group-item"%>
+          <% if current_user.email==@user.email%>
+              <%= link_to "Удалить проект", proj, method: :delete,
+                          data: { confirm: "You sure?" }, class: "list-group-item"%>
+          <%end%>
+          <a href="#" class="list-group-item active"> </a>
+      <%end%>
+    </div>
+    </div>
+    <div class="box2">
+    <div class="list-group">
+      <a href="#" class="list-group-item active">
+        Вы участвуете в проектах:
+      </a>
+      <%@user.teams.each do |team|%>
+          <% if current_user.email!=Project.find(team.project_id).user_email%>
+              <%= link_to "#{Project.find(team.project_id).project_url}",project_path(Project.find(team.project_id)) , class: "list-group-item"%>
+          <%end%>
+          <a href="#" class="list-group-item active"> </a>
+      <%end%>
+    </div>
+    </div>
+
 </div>

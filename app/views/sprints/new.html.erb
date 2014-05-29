@@ -1,0 +1,22 @@
+<%=provide(:title, "New sprint to project")%>
+<h1>Добавить спринт в проект</h1>
+<div class = "something">
+  <%#=@project.id%>
+</div>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@sprint) do |f| %>
+        <%= f.label "Название проекта" %>
+        <%= f.select :project_id, [[@project.project_url,@project.id]] %>
+        <%= f.label "Название спринта" %>
+        <%= f.text_field :title %>
+        <%= f.label "Дата начала спринта"%>
+        <%= f.date_select :datestart %>
+        <%= f.label "Дата конца спринта" %>
+        <%= f.date_select :dateend %>
+        <%= f.submit "Создать спринт", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>
+
